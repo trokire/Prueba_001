@@ -8,6 +8,7 @@ public class Rogue : MonoBehaviour
 
     private Rigidbody2D body;
     private float horizontal;
+    private float vertical;
 
     // Start is called before the first frame update
     void Start()
@@ -18,11 +19,12 @@ public class Rogue : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-         horizontal = Input.GetAxisRaw("Horizontal");
+        horizontal = Input.GetAxisRaw("Horizontal");
+        vertical = Input.GetAxisRaw("Vertical");
     }
 
     private void FixedUpdate()
     {
-        body.velocity = new Vector2(horizontal * runSpeed, 0);   
+        body.velocity = new Vector2(horizontal * runSpeed, vertical * runSpeed);
     }
 }
