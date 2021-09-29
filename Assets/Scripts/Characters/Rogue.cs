@@ -4,27 +4,56 @@ using UnityEngine;
 
 public class Rogue : MonoBehaviour
 {
-    public float runSpeed = 10.0f;    
+    public float runSpeed = 2f;
+    public float jumpForce = 10f;   
 
     private Rigidbody2D body;
+    private Animator anim;
     private float horizontal;
-    private float vertical;
+    private int costat;
 
-    // Start is called before the first frame update
+
     void Start()
     {
-        body = GetComponent<Rigidbody2D>();
+        body = GetComponent();
+        anim = GetComponent();
+        costat = 1;
     }
 
-    // Update is called once per frame
-    void Update()
+        
+    void FixedUpdate()
     {
-        horizontal = Input.GetAxisRaw("Horizontal");
-        vertical = Input.GetAxisRaw("Vertical");
-    }
+        if (Input.GetKey(KeyCode.D) || Input.GetKey("right"))
+        {
+            costat = 1;
+            anim.SetBool("walk", true);
+            body.velocity = new Vector2(runSpeed, body.velocity.y);
+        }
+        else if (Input.GetKey(KeyCode.A) || Input.GetKey("left"))
+        {
+            costat = -1;   
+            anim.SetBool("walk", true);
+            body.velocity = new Vector2(-runSpeed, body.velocity.y);
+        }
+        else
+        {
+            body.velocity = new Vector2(0, body.velocity.y);
+            anim.SetBool("walk", false);
+        }
 
-    private void FixedUpdate()
+        if (Input.GetKey(KeyCode.Space))
+        {
+            body.velocity = new Vector2(body.velocity.x,jumpForce);
+            anim.SetBool("jump", true);
+        }
+        transform.localScale = new Vector3(costat, 1, 1);
+    }   
+
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        body.velocity = new Vector2(horizontal * runSpeed, vertical * runSpeed);
+        if (collision.collider.tag == "Grounds")
+        {
+            anim.SetBool("jump", false);
+        } 
     }
 }
