@@ -41,7 +41,7 @@ public class Rogue : MonoBehaviour
             anim.SetBool("walk", false);
         }
 
-        if (Input.GetKey(KeyCode.Space))
+        if (Input.GetKey(KeyCode.Space) && CheckGround.isGrounded == true)
         {
             body.velocity = new Vector2(body.velocity.x,jumpForce);
             anim.SetBool("jump", true);
