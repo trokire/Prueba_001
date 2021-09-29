@@ -15,8 +15,8 @@ public class Rogue : MonoBehaviour
 
     void Start()
     {
-        body = GetComponent();
-        anim = GetComponent();
+        body = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
         costat = 1;
     }
 
